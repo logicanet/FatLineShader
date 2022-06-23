@@ -417,8 +417,22 @@ ShaderLib[ 'line' ] = {
 				#endif
 
 			#endif
-
+            
 			vec4 diffuseColor = vec4( diffuse, alpha );
+            
+            #ifdef WORLD_UNITS
+            float p = linewidth / 10.0; //10%
+			float maxP = linewidth * 0.5;
+			float factor = (1.0 - (len - p) / (maxP - p));
+            
+			if (len > p) {
+                
+                diffuseColor.r = diffuseColor.r * factor;
+				diffuseColor.g = diffuseColor.g * factor;
+				diffuseColor.b = diffuseColor.b * factor;
+                
+			}
+            #endif
 
 			#include <logdepthbuf_fragment>
 			#include <color_fragment>
