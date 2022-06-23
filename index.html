@@ -107,8 +107,9 @@
 				matLine = new LineMaterial( {
 
 					color: 0xffffff,
-					linewidth: 5, // in world units with size attenuation, pixels otherwise
+					linewidth: 1, // in world units with size attenuation, pixels otherwise
 					vertexColors: true,
+                    worldUnits: true,
 
 					//resolution:  // to be set by renderer, eventually
 					dashed: false,
@@ -218,8 +219,8 @@
 
 				const param = {
 					'line type': 0,
-					'world units': false,
-					'width': 5,
+					'world units': true,
+					'width': 1,
 					'alphaToCoverage': true,
 					'dashed': false,
 					'dash scale': 1,
@@ -255,7 +256,7 @@
 
 				} );
 
-				gui.add( param, 'width', 1, 10 ).onChange( function ( val ) {
+				gui.add( param, 'width', 0, 5 ).onChange( function ( val ) {
 
 					matLine.linewidth = val;
 
