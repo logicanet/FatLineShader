@@ -340,6 +340,8 @@ ShaderLib[ 'line' ] = {
 
 		}
 
+        uniform sampler2D map;
+
 		void main() {
 
 			#include <clipping_planes_fragment>
@@ -437,7 +439,8 @@ ShaderLib[ 'line' ] = {
 			#include <logdepthbuf_fragment>
 			#include <color_fragment>
 
-			gl_FragColor = vec4( diffuseColor.rgb, alpha );
+			//gl_FragColor = vec4( diffuseColor.rgb, alpha );
+            gl_FragColor = texture2D(map, vUv);
 
 			#include <tonemapping_fragment>
 			#include <encodings_fragment>
@@ -708,6 +711,12 @@ class LineMaterial extends ShaderMaterial {
 		} );
 
 		this.setValues( parameters );
+
+        if (parameters?.map?.isTexture) {
+            
+            this.uniforms.map.value = parameters.map;
+
+        }
 
 	}
 
