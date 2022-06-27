@@ -350,7 +350,7 @@ ShaderLib[ 'line' ] = {
 
 				if ( vUv.y < - 1.0 || vUv.y > 1.0 ) discard; // discard endcaps
 
-				if ( mod( vLineDistance + dashOffset, dashSize + gapSize ) > dashSize ) discard; // todo - FIX
+				//if ( mod( vLineDistance + dashOffset, dashSize + gapSize ) > dashSize ) discard; // todo - FIX
 
 			#endif
 
@@ -428,19 +428,21 @@ ShaderLib[ 'line' ] = {
 			float factor = (1.0 - (len - p) / (maxP - p));
             
 			if (len > p) {
-                
-                diffuseColor.r = diffuseColor.r * factor;
-				diffuseColor.g = diffuseColor.g * factor;
-				diffuseColor.b = diffuseColor.b * factor;
-                
+                alpha 		   =factor* 4.0;
+                diffuseColor.r =diffuseColor.r * factor;
+				diffuseColor.g =diffuseColor.g * factor;
+				diffuseColor.b =diffuseColor.b * factor;
 			}
+                
+                
             #endif
 
 			#include <logdepthbuf_fragment>
 			#include <color_fragment>
 
-			//gl_FragColor = vec4( diffuseColor.rgb, alpha );
-            gl_FragColor = texture2D(map, vUv);
+			//gl_FragColor = vec4( diffuseColor.rgb, alpha );	//Prova per usare colore sfumato...
+
+            gl_FragColor = texture2D(map, (vUv*0.5)+0.5);
 
 			#include <tonemapping_fragment>
 			#include <encodings_fragment>
